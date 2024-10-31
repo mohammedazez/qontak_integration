@@ -16,15 +16,21 @@ build:
 run-nohup: build
 	@nohup ./qontak_integration $(call arg) &
 
+docker-compose:
+	@docker-compose up -d
+
+docker-compose-down:
+	@docker-compose down
+
 docker:
 	@docker build . -t qontak_integration
 	@docker image prune --filter label=stage-qontak_integration=builder -f
 
 docker-run:
-	docker run -v $(this_dir)logs:/app/logs -e "environment=$(arg)" -d --restart always --hostname qontak_integration --name qontak_integration -p 9098:8888 -e TZ=Asia/Jakarta --link go-otto-users:go-otto-users --link redis_fiber:redis qontak_integration
+	docker run -v $(this_dir)logs:/app/logs -d --restart always --env-file .env --hostname qontak_integration --name qontak_integration -p 9098:8888 -e TZ=Asia/Jakarta qontak_integration
 
 docker-stop:
-	@docker stop qontak_integration-v2
+	@docker stop qontak_integration
 
 clear-container:
 	@docker rm -f qontak_integration

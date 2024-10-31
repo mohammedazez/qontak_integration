@@ -83,10 +83,10 @@ func (w *QontakVendor) WaBroadcastDirectBulk(CredentialObject CredentialObject, 
 	messageWrapper := createMessageWrapper(CredentialObject.ClientID, "QONTAK", CredentialObject.Channel, CredentialObject.Token, nil)
 	switch request.Channel {
 	case "BlastWhatsapp":
-		go w.enqueueBulkBroadcastWhatsappMessagesWithchannel(redis, messageWrapper, request.Messages, w.convertPayload)
+		go w.enqueueBulkBroadcastWhatsappMessagesWithChannel(redis, messageWrapper, request.Messages, w.convertPayload)
 		return
 	case "BlastWhatsappHeader":
-		go w.enqueueBulkBroadcastWhatsappMessagesWithchannel(redis, messageWrapper, request.Messages, w.convertPayloadHeader)
+		go w.enqueueBulkBroadcastWhatsappMessagesWithChannel(redis, messageWrapper, request.Messages, w.convertPayloadHeader)
 		return
 	default:
 		return nil, repository.NotFoundErr
@@ -129,7 +129,7 @@ func consumer(ch chan models.OutMessage, wg *sync.WaitGroup, redisClient *redis.
 	}
 }
 
-func (o *QontakVendor) enqueueBulkBroadcastWhatsappMessagesWithchannel(redisClient *redis.Storage, messageWrapper models.MessageWrapping, messages []models.OutMessage, payloadConverter func(message *models.OutMessage) interface{}) (interface{}, error) {
+func (o *QontakVendor) enqueueBulkBroadcastWhatsappMessagesWithChannel(redisClient *redis.Storage, messageWrapper models.MessageWrapping, messages []models.OutMessage, payloadConverter func(message *models.OutMessage) interface{}) (interface{}, error) {
 	ch := make(chan models.OutMessage, 100) // buffer channel
 	var wg sync.WaitGroup
 

@@ -1,0 +1,11 @@
+# docker-compose.yaml
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: qontak_integration
+    ports:
+      - "8888:8888"
+    env_file:
+      - .env

@@ -12,7 +12,6 @@ RUN rm -rf vendor
 
 FROM alpine:latest
 
-ENV environment=local
 
 RUN apk add --no-cache tzdata
 
@@ -28,4 +27,4 @@ COPY --from=builder /go/src/qontak_integration/resource /app/resource
 
 RUN mkdir logs
 
-CMD /app/qontak_integration ${environment}
+CMD /app/qontak_integration
