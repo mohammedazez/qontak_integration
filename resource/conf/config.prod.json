@@ -1,0 +1,55 @@
+{
+  "apps": {
+    "name": "qontak-integration",
+    "httpPort": 8888,
+    "mode": "prod",
+    "jwtSecretKey": "jwtSecret",
+    "tokenExpiration": 3600
+  },
+  "logger": {
+    "fileTdrLocation": "logs/qontak-integration-lite.log",
+    "fileLocation": "logs/",
+    "fileName": "qontak-integration.log",
+    "fileMaxAge": 30,
+    "stdout": false,
+    "maskingLogJsonPath": "password|pin|data.credential.pin|data.pin|idCard|passportPhoto|data.access|token",
+    "publishLog": false
+  },
+  "database": {
+    "dbType": "mysql",
+    "username": "root",
+    "password": "root",
+    "schema": "new_enigma",
+    "host": "localhost",
+    "port": 3306,
+    "maxIdleConn": 1,
+    "maxOpenConn": 5,
+    "logMode": false
+  },
+  "redis": {
+    "address": "localhost:6379",
+    "password": "12345",
+    "database": 0
+  },
+  "qontak": {
+    "option": {
+      "timeout": 20,
+      "debugMode": false,
+      "skipTLS": true
+    },
+    "host": "https://service-chat.qontak.com",
+    "path": {
+      "templateList": "/api/open/v1/templates/whatsapp",
+      "createMessage": "/api/open/v1/messages/whatsapp",
+      "broadcastDirect": "/api/open/v1/broadcasts/whatsapp/direct",
+      "resolved": "/api/open/v1/rooms/{room_id}/resolve"
+    }
+  },
+  "ForwardOption": {
+    "option": {
+      "timeout": 20,
+      "debugMode": false,
+      "skipTLS": true
+    }
+  }
+}
