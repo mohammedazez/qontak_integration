@@ -1,7 +1,7 @@
 # qontak_integration
 
 Skeleton service using golang and fiber framework. Mock example available.
-
+postman : https://documenter.getpostman.com/view/8298464/2sAY4viNsH
 ## Prepare service
 
 ```
