@@ -1,10 +1,11 @@
 package queries
 
 import (
-	"github.com/ewinjuman/go-lib/session"
 	"qontak_integration/app/domain/entities"
 	"qontak_integration/pkg/repository"
 	"qontak_integration/platform/database"
+
+	"github.com/ewinjuman/go-lib/session"
 )
 
 type (
@@ -51,7 +52,6 @@ func (q *queries) GetClientChannel(clientID int, channelName string) (client ent
 		Where("client_channel.client_id = ? and client_channel.channel = ?", clientID, channelName).
 		Preload("Vendor").
 		Find(&client).Error
-	//err = db.Where("client_id = ? and channel = ?", clientID, channelName).First(&client).Error
 	if err != nil {
 		err = repository.HandleMysqlError(err)
 		return
