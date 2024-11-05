@@ -3,9 +3,6 @@ package usecase
 import (
 	"encoding/json"
 	"fmt"
-	Error "github.com/ewinjuman/go-lib/error"
-	"github.com/ewinjuman/go-lib/helper/convert"
-	"github.com/ewinjuman/go-lib/session"
 	"log"
 	"qontak_integration/app/domain/queries"
 	"qontak_integration/app/models"
@@ -14,6 +11,10 @@ import (
 	"qontak_integration/platform/http/forward"
 	"qontak_integration/platform/http/qontak"
 	"strings"
+
+	Error "github.com/ewinjuman/go-lib/error"
+	"github.com/ewinjuman/go-lib/helper/convert"
+	"github.com/ewinjuman/go-lib/session"
 )
 
 type (

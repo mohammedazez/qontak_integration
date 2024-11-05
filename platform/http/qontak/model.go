@@ -29,13 +29,7 @@ type GetTemplateRequest struct {
 	Status          string `json:"status,omitempty"`
 }
 
-type CreateWaMassageRequest struct {
-	RoomID string `json:"room_id"`
-	Type   string `json:"type"`
-	Text   string `json:"text"`
-}
-
-type CreateInstagramMassageRequest struct {
+type CreateMassageRequest struct {
 	RoomID string `json:"room_id"`
 	Type   string `json:"type"`
 	Text   string `json:"text"`

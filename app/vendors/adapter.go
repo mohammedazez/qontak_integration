@@ -3,21 +3,23 @@ package vendors
 import (
 	"context"
 	"fmt"
-	Error "github.com/ewinjuman/go-lib/error"
-	"github.com/ewinjuman/go-lib/helper/convert"
-	"github.com/ewinjuman/go-lib/session"
-	"github.com/gofiber/storage/redis/v3"
 	"qontak_integration/app/domain/queries"
 	"qontak_integration/app/models"
 	"qontak_integration/pkg/repository"
 	"qontak_integration/platform/http/qontak"
 	"strings"
+
+	Error "github.com/ewinjuman/go-lib/error"
+	"github.com/ewinjuman/go-lib/helper/convert"
+	"github.com/ewinjuman/go-lib/session"
+	"github.com/gofiber/storage/redis/v3"
 )
 
 type (
 	VendorClient interface {
 		SendMessage(payload interface{}, credential Credential) (result interface{}, err error)
 		InstagramSendMessage(credentialObject CredentialObject, request *models.SendInstagramRequest) (response interface{}, err error)
+		TelegramSendMessage(credentialObject CredentialObject, request *models.SendTelegramRequest) (response interface{}, err error)
 		WaSendMessage(CredentialObject CredentialObject, request *models.SendWhatsappRequest) (response interface{}, err error)
 		WaBroadcastDirect(CredentialObject CredentialObject, request *models.BroadcastDirectRequest) (response interface{}, err error)
 		WaBroadcastDirectBulk(CredentialObject CredentialObject, request *models.BroadcastDirectBulkRequest) (response interface{}, err error)
