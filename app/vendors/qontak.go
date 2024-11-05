@@ -2,8 +2,6 @@ package vendors
 
 import (
 	"fmt"
-	"github.com/ewinjuman/go-lib/session"
-	"github.com/gofiber/storage/redis/v3"
 	"log"
 	"net/url"
 	"path"
@@ -14,6 +12,9 @@ import (
 	"qontak_integration/platform/http/qontak"
 	"strconv"
 	"sync"
+
+	"github.com/ewinjuman/go-lib/session"
+	"github.com/gofiber/storage/redis/v3"
 )
 
 type (
@@ -22,11 +23,6 @@ type (
 		query      queries.QueriesService
 		qontakHttp qontak.QontakHttpService
 	}
-
-	//qontakVendor struct {
-	//	session *session.Session
-	//	query   queries.QueriesService
-	//}
 )
 
 func (w *QontakVendor) SendMessage(payload interface{}, credential Credential) (result interface{}, err error) {
@@ -35,6 +31,8 @@ func (w *QontakVendor) SendMessage(payload interface{}, credential Credential) (
 		return w.qontakHttp.CreateWaMessage(payload, credential.Token)
 	case "Instagram":
 		return w.qontakHttp.CreateInstagramMessage(payload, credential.Token)
+	case "Telegram":
+		return w.qontakHttp.CreateTelegramMessage(payload, credential.Token)
 	case "BlastWhatsapp":
 		return w.qontakHttp.WaBroadcastDirect(payload, credential.Token)
 	case "BlastWhatsappHeader":
@@ -45,7 +43,7 @@ func (w *QontakVendor) SendMessage(payload interface{}, credential Credential) (
 }
 
 func (w *QontakVendor) WaSendMessage(credentialObject CredentialObject, request *models.SendWhatsappRequest) (response interface{}, err error) {
-	qontakRequest := qontak.CreateWaMassageRequest{
+	qontakRequest := qontak.CreateMassageRequest{
 		RoomID: request.To,
 		Type:   request.Message.Type,
 		Text:   request.Message.Content.Text,
@@ -94,7 +92,7 @@ func (w *QontakVendor) WaBroadcastDirectBulk(CredentialObject CredentialObject, 
 }
 
 func (w *QontakVendor) InstagramSendMessage(credentialObject CredentialObject, request *models.SendInstagramRequest) (response interface{}, err error) {
-	qontakRequest := qontak.CreateInstagramMassageRequest{
+	qontakRequest := qontak.CreateMassageRequest{
 		RoomID: request.To,
 		Type:   request.Message.Type,
 		Text:   request.Message.Content.Text,
@@ -104,6 +102,20 @@ func (w *QontakVendor) InstagramSendMessage(credentialObject CredentialObject, r
 		return nil, err
 	}
 	messageWrapper := createMessageWrapper(request.ClientID, "QONTAK", "Whatsapp", credentialObject.Token, qontakRequest)
+	return pushToQueue(redisClient, repository.SendMessageQueue, messageWrapper)
+}
+
+func (w *QontakVendor) TelegramSendMessage(credentialObject CredentialObject, request *models.SendTelegramRequest) (response interface{}, err error) {
+	qontakRequest := qontak.CreateMassageRequest{
+		RoomID: request.To,
+		Type:   request.Message.Type,
+		Text:   request.Message.Content.Text,
+	}
+	redisClient, err := cache.RedisConnection()
+	if err != nil {
+		return nil, err
+	}
+	messageWrapper := createMessageWrapper(request.ClientID, "QONTAK", "Telegram", credentialObject.Token, qontakRequest)
 	return pushToQueue(redisClient, repository.SendMessageQueue, messageWrapper)
 }
 

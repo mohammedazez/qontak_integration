@@ -1,23 +1,23 @@
 package models
 
 type SendWhatsappRequest struct {
-	ClientID int       `json:"client_id" validate:"required"`
-	To       string    `json:"to"`
-	Message  WAMessage `json:"message" validate:"required"`
+	ClientID int     `json:"client_id" validate:"required"`
+	To       string  `json:"to"`
+	Message  Message `json:"message" validate:"required"`
 }
 
-type WAMessage struct {
-	Type    string          `json:"type"`
-	Content WhatsappContent `json:"content"`
+type Message struct {
+	Type    string         `json:"type"`
+	Content MessageContent `json:"content"`
 }
 
 type SendInstagramRequest struct {
-	ClientID int       `json:"client_id" validate:"required"`
-	To       string    `json:"to"`
-	Message  WAMessage `json:"message" validate:"required"`
+	ClientID int     `json:"client_id" validate:"required"`
+	To       string  `json:"to"`
+	Message  Message `json:"message" validate:"required"`
 }
 
-type WhatsappContent struct {
+type MessageContent struct {
 	Hsm       *Hsm         `json:"hsm,omitempty"`
 	Text      string       `json:"text,omitempty"`
 	Audio     *OutAudio    `json:"audio,omitempty"`
@@ -39,4 +39,10 @@ type BroadcastDirectBulkRequest struct {
 	Messages []OutMessage `json:"messages" validate:"required"`
 	ClientID int          `json:"client_id" validate:"required"`
 	Channel  string       `json:"channel" validate:"required"`
+}
+
+type SendTelegramRequest struct {
+	ClientID int     `json:"client_id" validate:"required"`
+	To       string  `json:"to"`
+	Message  Message `json:"message" validate:"required"`
 }

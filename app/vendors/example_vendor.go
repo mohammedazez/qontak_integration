@@ -1,9 +1,10 @@
 package vendors
 
 import (
-	"github.com/ewinjuman/go-lib/session"
 	"qontak_integration/app/domain/queries"
 	"qontak_integration/app/models"
+
+	"github.com/ewinjuman/go-lib/session"
 )
 
 type (
@@ -11,11 +12,6 @@ type (
 		session *session.Session
 		query   queries.QueriesService
 	}
-
-	//komoVendor struct {
-	//	session *session.Session
-	//	query   queries.QueriesService
-	//}
 )
 
 func (w *KommoVendor) SendMessage(payload interface{}, credential Credential) (result interface{}, err error) {
@@ -39,5 +35,9 @@ func (w *KommoVendor) WaBroadcastDirectBulk(CredentialObject CredentialObject, r
 }
 
 func (w *KommoVendor) InstagramSendMessage(credentialObject CredentialObject, request *models.SendInstagramRequest) (response interface{}, err error) {
+	panic("implement me")
+}
+
+func (w *KommoVendor) TelegramSendMessage(credentialObject CredentialObject, request *models.SendTelegramRequest) (response interface{}, err error) {
 	panic("implement me")
 }

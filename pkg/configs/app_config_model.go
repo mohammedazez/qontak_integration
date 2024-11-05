@@ -58,10 +58,11 @@ type Qontak struct {
 	}
 	Host string `json:"host" envconfig:"QONTAK_HOST" default:"localhost"`
 	Path struct {
-		WaTemplateList    string `json:"templateList" envconfig:"QONTAK_PATH_WA_TEMPLATE_LIST" default:"localhost"`
-		WaSendMessage     string `json:"createMessage" envconfig:"QONTAK_PATH_WA_SEND_MESSAGE" default:""`
-		WaBroadcastDirect string `json:"broadcastDirect" envconfig:"QONTAK_PATH_WA_BROADCAST_DIRECT" default:""`
-		Resolved          string `json:"resolved" envconfig:"QONTAK_PATH_RESOLVED" default:""`
+		WaTemplateList      string `json:"templateList" envconfig:"QONTAK_PATH_WA_TEMPLATE_LIST" default:"localhost"`
+		WaSendMessage       string `json:"createMessage" envconfig:"QONTAK_PATH_WA_SEND_MESSAGE" default:""`
+		WaBroadcastDirect   string `json:"broadcastDirect" envconfig:"QONTAK_PATH_WA_BROADCAST_DIRECT" default:""`
+		TelegramSendMessage string `json:"createTelegramMessage" envconfig:"QONTAK_PATH_TELEGRAM_SEND_MESSAGE" default:""`
+		Resolved            string `json:"resolved" envconfig:"QONTAK_PATH_RESOLVED" default:""`
 	}
 }
 

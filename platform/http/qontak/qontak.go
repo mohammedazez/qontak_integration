@@ -8,20 +8,22 @@ import (
 	"strconv"
 	"strings"
 
-	Error "github.com/ewinjuman/go-lib/error"
-	"github.com/ewinjuman/go-lib/helper/convert"
-	Rest "github.com/ewinjuman/go-lib/http"
-	Session "github.com/ewinjuman/go-lib/session"
 	"qontak_integration/app/domain/entities"
 	"qontak_integration/app/domain/queries"
 	"qontak_integration/pkg/configs"
 	"qontak_integration/pkg/repository"
+
+	Error "github.com/ewinjuman/go-lib/error"
+	"github.com/ewinjuman/go-lib/helper/convert"
+	Rest "github.com/ewinjuman/go-lib/http"
+	Session "github.com/ewinjuman/go-lib/session"
 )
 
 type (
 	QontakHttpService interface {
 		CreateInstagramMessage(request interface{}, token string) (response CreateMessageResponse, err error)
 		CreateWaMessage(request interface{}, token string) (response CreateMessageResponse, err error)
+		CreateTelegramMessage(request interface{}, token string) (response CreateMessageResponse, err error)
 		WaBroadcastDirect(request interface{}, token string) (response BroadcastDirectResponse, err error)
 		WaTemplate(request GetTemplateRequest, token string) (response GeneralResponse, err error)
 		Resolved(request interface{}, roomID, token string) (response GeneralResponse, err error)
@@ -138,5 +140,10 @@ func (o *qontakHttp) Resolved(request interface{}, roomID, token string) (respon
 
 func (o *qontakHttp) CreateInstagramMessage(request interface{}, token string) (response CreateMessageResponse, err error) {
 	err = o.doHttpRequest(http.MethodPost, o.qontakConfig.Path.WaSendMessage, token, request, nil, &response, "multipart/form-data")
+	return
+}
+
+func (o *qontakHttp) CreateTelegramMessage(request interface{}, token string) (response CreateMessageResponse, err error) {
+	err = o.doHttpRequest(http.MethodPost, o.qontakConfig.Path.TelegramSendMessage, token, request, nil, &response, "multipart/form-data")
 	return
 }

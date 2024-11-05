@@ -1,9 +1,10 @@
 package routes
 
 import (
+	httpHandler "qontak_integration/app/handlers/http"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
-	httpHandler "qontak_integration/app/handlers/http"
 )
 
 // PublicRoutes func for describe group of public routes.
@@ -24,6 +25,9 @@ func PublicRoutes(a *fiber.App) {
 
 	instagram := v1.Group("/instagram")
 	instagram.Post("/message", httpHandler.SendInstagramMessage)
+
+	telegram := v1.Group("/telegram")
+	telegram.Post("/message", httpHandler.SendTelegramMessage)
 
 	qontak := v1.Group("qontak")
 	qontak.Post("/inbound", httpHandler.QontakInbound)
